@@ -9,9 +9,11 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authorsRouter = require('./routes/authors');
 var categoriesRouter = require('./routes/categories');
+var booksRouter=require('./routes/books');
+const cors=require('cors');
 
 var app = express();
-
+app.use(cors());
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -26,6 +28,7 @@ app.use('/', indexRouter);
 app.use('/api/users',  usersRouter);
 app.use('/api/authors',  authorsRouter);
 app.use('/api/categories',  categoriesRouter);
+app.use('/api/books',  booksRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

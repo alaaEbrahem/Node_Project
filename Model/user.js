@@ -74,12 +74,12 @@ var user = new User({
     email: "bfahmy@gmail2s.com"
 });
 
-user
-    .save()
-    .then((user) => {
-        console.log('user', user);
-    }, (e) => {
-        console.log('unable to save')
-        console.log(e.message)
-    }
-    )
+// user
+//     .save()
+//     .then((user) => {
+//         console.log('user', user);
+//     }, (e) => {
+//         console.log('unable to save')
+//         console.log(e.message)
+//     }
+//     )
