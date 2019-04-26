@@ -28,9 +28,6 @@ router.post('/create', (req, res, next) => {
 
 
 
-
-
-
 router.patch('/:Id', (req, res, next) => {
   usermodel
     .findByIdAndUpdate(req.params.Id, req.body, { new: true })
