@@ -27,42 +27,30 @@ router.post('/create', (req, res, next) => {
 });
 
 
-// var user = new usermodel({
-//   name: 'user123',
-//   password: "dh"
-// });
-//   user
-//     .save()
-//     .then((user) => {
-//       console.log('user', user);
-//     }, (e) => {
-//       console.log('unable to save')
-//     }
-//   )
 
 
 
 
-// router.patch('/:Id', (req, res, next) => {
-//   usermodel
-//     .findByIdAndUpdate(req.params.Id, req.body, { new: true })
-//     .then(user => res.send(user))
-//     .catch(err => next(createError(400, err.message)))
-// });
+router.patch('/:Id', (req, res, next) => {
+  usermodel
+    .findByIdAndUpdate(req.params.Id, req.body, { new: true })
+    .then(user => res.send(user))
+    .catch(err => next(createError(400, err.message)))
+});
 
-// router.delete('/:Id', (req, res, next) => {
-//   usermodel
-//     .findByIdAndDelete(req.params.Id)
-//     .then(user => res.send(user))
-//     .catch(err => next(createError(400, err.message)))
-// });
+router.delete('/:Id', (req, res, next) => {
+  usermodel
+    .findByIdAndDelete(req.params.Id)
+    .then(user => res.send(user))
+    .catch(err => next(createError(400, err.message)))
+});
 
-// router.get('/listById/:Id', (req, res, next) => {
-//   usermodel
-//     .findById(req.params.Id)
-//     .then(u => res.send(u))
-//     .catch(err => next(createError(404, err.message)));
-// })
+router.get('/listById/:Id', (req, res, next) => {
+  usermodel
+    .findById(req.params.Id)
+    .then(u => res.send(u))
+    .catch(err => next(createError(404, err.message)));
+})
 
 
 module.exports = router;
