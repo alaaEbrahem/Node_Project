@@ -1,6 +1,12 @@
 const mongoose = require('mongoose');
 
 const validator = require('validator');
+const bcrypt = require('bcrypt');
+const util = require('util');
+
+
+const saltRounds = process.env.SALT_ROUNDS || 9;
+
 const userSchema = new mongoose.Schema({
 
     username: {
@@ -51,23 +57,29 @@ userSchema.options.toJSON.transform = function (doc, ret, options) {
 
 
 
+
+const hashPassword = (password) => bcrypt.hash(password, saltRounds);
+userSchema.pre('save', async function () {
+    const currentUser = this;
+    if (currentUser.isNew) {
+        currentUser.password = await hashPassword(currentUser.password);
+    }
+})
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+var user = new User({
+    username: 'bassant22',
+    name: 'bassant moham2ed',
+    password: "dhdsdnshnn2",
+    email: "bfahmy@gmail2s.com"
+});
 
-
-// var user = new User({
-//     username: 'bassant',
-//     name: 'bassant mohamed',
-//     password: "dhdsdnshnn",
-//     email: "bfahmy@gmail.com"
-// });
-
-// user
-//     .save()
-//     .then((user) => {
-//         console.log('user', user);
-//     }, (e) => {
-//         console.log('unable to save')
-//         console.log(e.message)
-//     }
-//     )
+user
+    .save()
+    .then((user) => {
+        console.log('user', user);
+    }, (e) => {
+        console.log('unable to save')
+        console.log(e.message)
+    }
+    )
