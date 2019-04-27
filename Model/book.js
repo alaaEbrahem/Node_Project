@@ -1,10 +1,11 @@
 const mongoose = require('mongoose');
 
 const bookSchema= new mongoose.Schema({
-    // Photo:{
-    //     data: Buffer,
-    //     contentType: String
-    // },
+    Photo:{
+        // data: Buffer,
+        // contentType: String
+        type: String,
+    },
     Name:{
         type: String,
         index: { unique: true },
@@ -12,10 +13,10 @@ const bookSchema= new mongoose.Schema({
         minlength: 3
     },
     CategoryID:{
-        type:String
+        type: String,
     },
     AuthorID:{
-        type:String
+        type: String,
     }
 })
 
