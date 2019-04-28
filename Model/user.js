@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
-
+var integerValidator = require('mongoose-integer');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const util = require('util');
+const jwt = require("jsonwebtoken");
+const jwtSignPromise = util.promisify(jwt.sign);
+const jwtVerifyPromise = util.promisify(jwt.verify);
+const jwtKey = "secretKey";
+const saltRounds = 10;
+const myPlaintextPassword = 's0/\/\P4$$w0rD';
+bcrypt.hash(myPlaintextPassword, saltRounds) .then(hasedPassword=>{
 
-
-const saltRounds = process.env.SALT_ROUNDS || 9;
+}).catch(err=>{})
 
 const userSchema = new mongoose.Schema({
 
@@ -55,9 +61,6 @@ userSchema.options.toJSON.transform = function (doc, ret, options) {
     return ret;
 };
 
-
-
-
 const hashPassword = (password) => bcrypt.hash(password, saltRounds);
 userSchema.pre('save', async function () {
     const currentUser = this;
@@ -65,21 +68,19 @@ userSchema.pre('save', async function () {
         currentUser.password = await hashPassword(currentUser.password);
     }
 })
-const User = mongoose.model('User', userSchema);
-module.exports = User;
-var user = new User({
-    username: 'bassant22',
-    name: 'bassant moham2ed',
-    password: "dhdsdnshnn2",
-    email: "bfahmy@gmail2s.com"
-});
+ // function recieve password and check if password true or false on current user
+  //each instance of user can call it
+  userSchema.method("verifyPassword", async function(password) {
+    return bcrypt.compare(password, this.password);
+  });
+  userSchema.method("generateToken", function() {
+    return jwtSignPromise({ id: this._id }, jwtKey, { expiresIn: "4d" });
+  });
+  userSchema.static("verifyToken", async function(token) {
+    const decodded = await jwtVerifyPromise(token, jwtKey);
+  
+    return this.findById(decodded.id);
+  });
+const userModel=mongoose.model('User',userSchema);
+module.exports=userModel;
 
-// user
-//     .save()
-//     .then((user) => {
-//         console.log('user', user);
-//     }, (e) => {
-//         console.log('unable to save')
-//         console.log(e.message)
-//     }
-//     )

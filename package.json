@@ -16,9 +16,12 @@
     "express": "~4.16.0",
     "http-errors": "^1.7.2",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.4",
+    "mongoose-integer": "^0.1.1",
     "morgan": "~1.9.0",
     "nodemon": "^1.18.11",
+    "util": "^0.11.1",
     "validator": "^10.11.0"
   }
 }

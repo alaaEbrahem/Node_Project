@@ -2,31 +2,34 @@ var express = require('express');
 var router = express.Router();
 const createError = require('http-errors');
 const usermodel = require('./../Model/user');
+const auth = require("../middlewares/authentication");
 
 /* GET users listing. */
 
-router.get('/listing', function (req, res, next) {
+router.get('/', function (req, res, next) {
   usermodel.find((err, data) => {
     res.send(data)
   })
 });
+//login
+router.post("/login", async function (req, res, next) {
+  const { username, password } = req.body;
+  const currentUser = await usermodel.findOne({ username });
+  if (!currentUser) return next(createError(401)); // return keyword is important to break fun
+  const passwordMatch = await currentUser.verifyPassword(password);
+  if (!passwordMatch) return next(createError(401)); // return keyword is important
+  const token = await currentUser.generateToken();
+  res.send({ profile: currentUser, token });
+});
 
-
-router.get('/create', (req, res) => {
-  res.send('createUser')
-})
-
-
-
-router.post('/create', (req, res, next) => {
+router.post('/', (req, res, next) => {
   const user = new usermodel(req.body)
-  user
-    .save()
+  user.save()
     .then(user => res.send(user))
     .catch(err => next(createError(400, err.message)));
 });
-
-
+//athentication on ather routes
+router.use(auth)
 
 router.patch('/:Id', (req, res, next) => {
   usermodel

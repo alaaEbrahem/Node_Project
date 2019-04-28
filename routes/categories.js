@@ -13,15 +13,15 @@ router.get('/',(req,res,err)=>{
 });
 
 router.post('/', /*async*/(req, res, next)=> {
-    
+
     /*await*/ categoryModel.create(req.body)
     .then(msgs=>res.send("done"))
-    .catch(err=>next(createError(400,err.message)))
+    .catch(err=>next(createError(400,err)))
 });
 
 router.patch('/:id', function(req, res, next){
     debugger
-    categoryModel.findByIdAndUpdate(req.params.id,req.body)
+    categoryModel.findByIdAndUpdate(req.params.id,req.body,{runValidators:true})
     .then(msgs=>res.send("Updated"))
     .catch(err=>next(createError(500,err.message)));
   });
