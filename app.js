@@ -11,6 +11,9 @@ var authorsRouter = require('./routes/authors');
 var categoriesRouter = require('./routes/categories');
 var booksRouter=require('./routes/books');
 var profileRouter=require('./routes/profile');
+
+const imageRouter =require('./routes/images');
+
 const cors=require('cors');
 
 var app = express();
@@ -31,6 +34,8 @@ app.use('/api/authors',  authorsRouter);
 app.use('/api/categories',  categoriesRouter);
 app.use('/api/books',  booksRouter);
 app.use('/api/profile',  profileRouter);
+
+app.use('/api/images',  imageRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -45,7 +45,7 @@ router.delete('/:Id', (req, res, next) => {
     .catch(err => next(createError(400, err.message)))
 });
 
-router.get('/listById/:Id', (req, res, next) => {
+router.get('/:Id', (req, res, next) => {
   usermodel
     .findById(req.params.Id)
     .then(u => res.send(u))

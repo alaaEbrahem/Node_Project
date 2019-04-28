@@ -34,4 +34,9 @@ router.delete('/:id', function (req, res, next) {
         .then(msgs => res.send('deleted'))
         .catch(err => next(createError(500, err.message)));
 });
+router.get('/cat/:Id', (req, res, next) => {
+    bookModel.find({CategoryID:req.params.Id})
+    .then(books=>res.send(books))
+            .catch(err=>next(createError(500,err.message)))
+  })
 module.exports = router;
