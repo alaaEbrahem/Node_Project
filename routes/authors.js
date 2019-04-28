@@ -34,6 +34,7 @@ router.patch('/:Id', (req, res, next) => {
         .catch(err => next(createError(400, err.message)))
 });
 
+
 router.delete('/:Id', (req, res, next) => {
     authormodel
         .findByIdAndDelete(req.params.Id)
