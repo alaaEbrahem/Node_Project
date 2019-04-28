@@ -42,6 +42,12 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         index: { unique: true },
         validate: validator.isEmail
+    },
+    userGroup: {
+        type: Number,
+        required: true,
+        enum:[1,2,2],
+        default:2,
     }
 
 
