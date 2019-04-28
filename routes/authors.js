@@ -11,13 +11,13 @@ router.get('/listing', function (req, res, next) {
 });
 
 
-router.get('/create', (req, res) => {
+router.get('/', (req, res) => {
     res.send('createِAuthor')
 })
 
 
 
-router.post('/create', (req, res, next) => {
+router.post('/', (req, res, next) => {
     const author = new authormodel(req.body)
     author
         .save()
