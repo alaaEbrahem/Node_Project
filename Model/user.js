@@ -17,13 +17,15 @@ const userSchema = new mongoose.Schema({
 
     username: {
         type: String,
-        index: { unique: true },
+        unique: true,
         required: true,
         lowercase: true,
-        minlength: 3
+        minlength: 3,
+     
     }
     ,
     name: {
+       
         type: String,
         required: true,
         lowercase: true,
@@ -38,9 +40,9 @@ const userSchema = new mongoose.Schema({
     ,
     email: {
         type: String,
+        unique: true,
         required: true,
         lowercase: true,
-        index: { unique: true },
         validate: validator.isEmail
     },
     userGroup: {
