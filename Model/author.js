@@ -2,18 +2,18 @@ const mongoose = require('mongoose');
 
 const authorSchema = new mongoose.Schema({
 
-    firstname: {
+    FN: {
         type: String,
         required: true,
         minlength: 3
     }
     ,
-    lastname: {
+    LN: {
         type: String,
         required: true,
         minlength: 3
     },
-    birthdate:{
+    DOB:{
         type: Date
     }
 
@@ -25,9 +25,9 @@ module.exports = Author;
 
 
 // var author = new Author({
-    // firstname:"bassant",
-    // lastname:"mohamed",
-    // birthdate:"02-03-1995"
+//     FN:"ali4",
+//     LN:"fahmy4",
+//     DOB:"02-03-1995"
 // });
 
 // author
