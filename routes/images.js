@@ -10,23 +10,18 @@ var storage = multer.diskStorage({
         cb(null, file.fieldname + '-' + Date.now() + '.jpg')
     }
 });
-
 var upload = multer({ storage: storage }).single('Image');
-
-
 router.post('/', function (req, res) {
+    debugger
     upload(req, res, function (err) {
         if (err) {
-            // An error occurred when uploading
         }
         res.json({
-            success: true,
             message: 'Image uploaded!'
         });
-
-        // Everything went fine
     })
 });
-
-
 module.exports = router;
+
+
+
