@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const createError = require('http-errors');
 const usermodel = require('./../Model/user');
-const auth = require("../middlewares/authentication");
+const auth = require("../Middlewares/authentication");
 
 /* GET users listing. */
 

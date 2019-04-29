@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 var integerValidator = require('mongoose-integer');
+var uniqueValidator = require('mongoose-unique-validator');
 const validator = require('validator');
 const bcrypt = require('bcrypt');
 const util = require('util');
@@ -7,7 +8,8 @@ const jwt = require("jsonwebtoken");
 const jwtSignPromise = util.promisify(jwt.sign);
 const jwtVerifyPromise = util.promisify(jwt.verify);
 const jwtKey = "secretKey";
-const saltRounds = 10;
+const secretKey=process.env.JWt_SECRET||'hghfgfggfg';
+const saltRounds = process.env.SALT_ROUNDS||10;
 const myPlaintextPassword = 's0/\/\P4$$w0rD';
 bcrypt.hash(myPlaintextPassword, saltRounds) .then(hasedPassword=>{
 
@@ -21,6 +23,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         lowercase: true,
         minlength: 3,
+        index: { unique: true },
      
     }
     ,
@@ -43,7 +46,8 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true,
         lowercase: true,
-        validate: validator.isEmail
+        validate: validator.isEmail,
+        index: { unique: true },
     },
     userGroup: {
         type: Number,
@@ -58,7 +62,7 @@ const userSchema = new mongoose.Schema({
             hidden: ['password'],
             transform: true
         }
-    }
+    },{autoIndex:true}
 );
 userSchema.options.toJSON.transform = function (doc, ret, options) {
     if (Array.isArray(options.hidden)) {
@@ -90,5 +94,6 @@ userSchema.pre('save', async function () {
     return this.findById(decodded.id);
   });
 const userModel=mongoose.model('User',userSchema);
+userSchema.plugin(uniqueValidator);
 module.exports=userModel;
 
